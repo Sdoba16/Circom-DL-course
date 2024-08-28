@@ -2,3 +2,5 @@
 *.dev
 dev.*
 inputs_task1.json
+inputs_task2.json
+node_modules
