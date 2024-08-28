@@ -33,4 +33,5 @@ template CheckEquation() {
     a_6pow.out + b7_a_sq_plus_b.out + 42 === N;
 }
 
+
 component main {public[N]}= CheckEquation(); 
