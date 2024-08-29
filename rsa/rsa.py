@@ -21,7 +21,18 @@ def generate_big_prime(n):
 def generateTwoPrimes() :
     p = generate_big_prime(256)
     q = generate_big_prime(256)
-    return p, q
+    return p, q    
+
+class PrivatKey :
+    def __init__(self, n, d) :
+        self.n = n
+        self.d = d
+    
+class PublicKey :
+    def __init__(self, n, e) :
+        self.n = n
+        self.e = e
+        
 
 class SignatureAlgorithm : 
     def generateKeyPair() :
@@ -30,10 +41,17 @@ class SignatureAlgorithm :
         z = (p - 1) * (q - 1)
         e = 65537
         d = pow(e, -1, z)
-        sk = (n, d)
-        pk = (n, e)
+        sk = PrivatKey(n, d)
+        pk = PublicKey(n, e)
         return sk, pk
+        
+class KeyPair :
+    def __init__(self) :
+        sigAlg = SignatureAlgorithm
+        self.sk, self.pk = sigAlg.generateKeyPair()
+    
+    def getKeyPair(self) :
+        return self.sk, self.pk
 
-sa = SignatureAlgorithm
-sk, pk = sa.generateKeyPair()
-print(sk, pk)
+kp = KeyPair()
+print(kp.sk.d, kp.pk.e)
