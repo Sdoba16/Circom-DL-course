@@ -1,4 +1,5 @@
 from random import randint
+import hashlib 
 
 def is_prime(num, test_count):
     if num == 1:
@@ -27,13 +28,17 @@ class PrivatKey :
     def __init__(self, n, d) :
         self.n = n
         self.d = d
-    
+        
+    def signMessage(self, message) :
+        return pow(message, self.d, self.n)
+             
 class PublicKey :
     def __init__(self, n, e) :
         self.n = n
         self.e = e
+    def verifySignature(self, signature, message) :
+        return 1 if pow(signature, self.e, self.n) == message else 0
         
-
 class SignatureAlgorithm : 
     def generateKeyPair() :
         p, q = generateTwoPrimes()
@@ -44,6 +49,12 @@ class SignatureAlgorithm :
         sk = PrivatKey(n, d)
         pk = PublicKey(n, e)
         return sk, pk
+    
+    def signMessage(self, sk, message) :
+        return sk.signMessage(message)
+        
+    def verifySignature(self, pk, signature, message) :
+        return pk.verifySignature(signature, message)
         
 class KeyPair :
     def __init__(self) :
@@ -54,4 +65,9 @@ class KeyPair :
         return self.sk, self.pk
 
 kp = KeyPair()
-print(kp.sk.d, kp.pk.e)
+sa = SignatureAlgorithm()
+message = int(hashlib.sha256("127789823899882".encode()).hexdigest(),16)
+
+print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message), message))
+print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message) + 1, message))
+print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message), message+1))
