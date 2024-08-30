@@ -67,7 +67,9 @@ class KeyPair :
 kp = KeyPair()
 sa = SignatureAlgorithm()
 message = int(hashlib.sha256("127789823899882".encode()).hexdigest(),16)
-
+print(kp.sk.n, kp.sk.d)
+print(kp.pk.n, kp.pk.e)
+print(message)
 print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message), message))
 print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message) + 1, message))
 print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message), message+1))
