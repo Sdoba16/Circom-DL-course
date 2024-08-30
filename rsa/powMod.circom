@@ -1,6 +1,6 @@
 pragma circom 2.1.6;
  
-//include "../node_modules/circom-ecdsa/circuits/bigint-func.circom"
+include "../bigInt/bigInt.circom";
 
 // w = 32
 // e_bits = 17

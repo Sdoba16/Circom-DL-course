@@ -20,8 +20,8 @@ def generate_big_prime(n):
             return p
         
 def generateTwoPrimes() :
-    p = generate_big_prime(256)
-    q = generate_big_prime(256)
+    p = generate_big_prime(512)
+    q = generate_big_prime(512)
     return p, q    
 
 class PrivatKey :
@@ -70,6 +70,7 @@ message = int(hashlib.sha256("127789823899882".encode()).hexdigest(),16)
 print(kp.sk.n, kp.sk.d)
 print(kp.pk.n, kp.pk.e)
 print(message)
+print(sa.signMessage(kp.sk, message))
 print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message), message))
 print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message) + 1, message))
 print(sa.verifySignature(kp.pk, sa.signMessage(kp.sk, message), message+1))
