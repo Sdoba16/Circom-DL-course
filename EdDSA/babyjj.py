@@ -29,15 +29,16 @@ class Babyjj :
         y1 = point1.y
         x2 = point2.x
         y2 = point2.y
-        point3 = Point((x1*y2 + y1*x2) * pow((1 + self.d*x1*x2*y1*y2), -1, self.p) % self.p,
-                       (y1*y2 - self.a*x1*x2) * pow((1 - self.d*x1*x2*y1*y2), -1, self.p) % self.p)
+        point3 = Point((x1*y2 % self.p + y1*x2 % self.p) * pow((1 + self.d*x1*x2*y1*y2 % self.p), -1, self.p) % self.p,
+                       (y1*y2 % self.p - self.a*x1*x2 % self.p) * pow((1 - self.d*x1*x2*y1*y2 % self.p), -1, self.p) % self.p)
         return point3
     
     def scalarMultiplication(self, scalar, point) :
+        #scalar = scalar % self.l
         if scalar == 0 : return self.G
         if scalar == 1 : return point
         if scalar % 2 : return self.pointSum(point, self.scalarMultiplication(scalar - 1, point))
-        point2 = self.scalarMultiplication(scalar / 2, point)
+        point2 = self.scalarMultiplication(scalar // 2, point)
         return self.pointSum(point2, point2)
 
 
@@ -49,5 +50,7 @@ y2 = 208190453746709621674353600350968752584069928936337598812761249055565079723
 point1 = Point(x1, y1)
 point2 = Point(x1, y1)
 bj = Babyjj()
-#print(bj.scalarMultiplication(9, bj.G).x)
-#print(bj.pointSum(bj.B, bj.G).x)
+print(bj.scalarMultiplication(bj.l, bj.B).y)
+#print(bj.scalarMultiplication(7, bj.G).x)
+#print(bj.pointSum(bj.scalarMultiplication(7, bj.G), bj.G).x)
+#print(bj.B.x)
