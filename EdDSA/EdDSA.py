@@ -49,7 +49,6 @@ class PublicKey :
 class SignatureAlgorithm : 
     def generateKeyPair(self) :
         k = random.randint(1, bj.l)
-        k = 823899291489943629784568195609105616885786648532160093915334760493053875180
         sk = PrivateKey(k)
         pk = PublicKey(sk)
         return sk, pk
